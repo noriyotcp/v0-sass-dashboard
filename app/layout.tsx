@@ -43,10 +43,7 @@ export default function RootLayout({
                 </Link>
               </li>
               <li>
-                <Link
-                  className="flex items-center gap-3 py-2"
-                  href="/users"
-                >
+                <Link className="flex items-center gap-3 py-2" href="/users">
                   <svg
                     className=" h-5 w-5"
                     fill="none"
