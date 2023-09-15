@@ -1,8 +1,12 @@
 import { users } from '@/lib/users';
 import { notFound } from "next/navigation";
 
+const fetchUsers = (id: string) => {
+  return users.find((user) => user.id === parseInt(id));
+}
+
 export default function User({ params }: { params: { id: string } }) {
-  const user = users.find((user) => user.id === parseInt(params.id));
+  const user = fetchUsers(params.id);
   if (user === undefined) {
     return notFound();
   }
