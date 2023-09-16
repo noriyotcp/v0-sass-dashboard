@@ -9,9 +9,11 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { User } from "@prisma/client";
+import { headers } from "next/headers"
 
 const fetchUsers = async () => {
-  const res = await fetch(`http://localhost:3000/api/users`, {
+  const host = headers().get("host")
+  const res = await fetch(`http://${host}/api/users`, {
     headers: {
       "Content-Type": "application/json",
     },

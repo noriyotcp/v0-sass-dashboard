@@ -1,9 +1,11 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { headers } from "next/headers";
 
 const fetchUser = async (id: string) => {
-  const res = await fetch(`http://localhost:3000/api/users/${id}`, {
+  const host = headers().get("host");
+  const res = await fetch(`http://${host}/api/users/${id}`, {
     headers: {
       "Content-Type": "application/json",
     },
