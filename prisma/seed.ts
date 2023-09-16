@@ -1,7 +1,26 @@
-import { PrismaClient } from '@prisma/client'
-import { users } from '../lib/users'
+import { PrismaClient, Prisma } from '@prisma/client'
 
 const prisma = new PrismaClient()
+
+type UserParams = Pick<Prisma.UserCreateInput, 'name' | 'username' | 'email'>
+
+const users: UserParams[] = [
+  {
+    name: "Leanne Graham",
+    username: "bret",
+    email: "leanne-graham@example.com",
+  },
+  {
+    name: "Ervin Howell",
+    username: "antonette",
+    email: "ervin-howell@example.com",
+  },
+  {
+    name: "Clementine Bauch",
+    username: "samantha",
+    email: "clementine-bauch@example.com",
+  },
+];
 
 async function main() {
   users.forEach(async (user) => {
