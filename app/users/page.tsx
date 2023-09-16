@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { User } from "@/lib/users";
+import { User } from "@prisma/client";
 
 const fetchUsers = async () => {
   const res = await fetch(`http://localhost:3000/api/users`, {
@@ -46,8 +46,8 @@ export default async function Users() {
                 <TableCell>{user.name}</TableCell>
                 <TableCell>{user.username}</TableCell>
                 <TableCell>{user.email}</TableCell>
-                <TableCell>{user.createdAt}</TableCell>
-                <TableCell>{user.updatedAt}</TableCell>
+                <TableCell>{user.createdAt.toString()}</TableCell>
+                <TableCell>{user.updatedAt.toString()}</TableCell>
 
                 <TableCell>
                   <Link href={`users/${user.id}`}>
