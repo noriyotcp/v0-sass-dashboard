@@ -33,6 +33,8 @@ export default async function Users() {
             <TableHead>Name</TableHead>
             <TableHead>Username</TableHead>
             <TableHead>Email</TableHead>
+            <TableHead>Created At</TableHead>
+            <TableHead>Updated At</TableHead>
             <TableHead></TableHead>
           </TableRow>
         </TableHeader>
@@ -44,6 +46,8 @@ export default async function Users() {
                 <TableCell>{user.name}</TableCell>
                 <TableCell>{user.username}</TableCell>
                 <TableCell>{user.email}</TableCell>
+                <TableCell>{user.createdAt}</TableCell>
+                <TableCell>{user.updatedAt}</TableCell>
 
                 <TableCell>
                   <Link href={`users/${user.id}`}>
