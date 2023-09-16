@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
   "dependencies": {
     "@prisma/client": "^5.3.1",
     "@radix-ui/react-slot": "^1.0.2",
@@ -30,6 +33,7 @@
     "typescript": "5.2.2"
   },
   "devDependencies": {
-    "prisma": "^5.3.1"
+    "prisma": "^5.3.1",
+    "ts-node": "^10.9.1"
   }
 }
