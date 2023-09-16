@@ -8,14 +8,19 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { User } from "@/lib/users";
 
-export default async function Users() {
+const fetchUsers = async () => {
   const res = await fetch(`http://localhost:3000/api/users`, {
     headers: {
       "Content-Type": "application/json",
     },
   });
-  const users = await res.json();
+  return res.json();
+}
+
+export default async function Users() {
+  const users: User[] = await fetchUsers();
 
   return (
     <>
