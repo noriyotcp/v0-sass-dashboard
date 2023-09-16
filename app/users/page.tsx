@@ -1,4 +1,3 @@
-import { users } from "@/lib/users";
 import Link from "next/link";
 import {
   Table,
@@ -10,7 +9,14 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 
-export default function Users() {
+export default async function Users() {
+  const res = await fetch(`http://localhost:3000/api/users`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const users = await res.json();
+
   return (
     <>
       <h2 className="text-xl mb-5">Welcome back, Users!</h2>
