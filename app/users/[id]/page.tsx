@@ -14,7 +14,7 @@ const fetchUser = async (id: string) => {
 
 export default async function User({ params }: { params: { id: string } }) {
   const res = await fetchUser(params.id);
-  if (!res.ok) {
+  if (res.status === 404) {
     return notFound();
   }
   const user = await res.json();
