@@ -16,6 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useState } from "react";
 
 const formSchema = z.object({
   title: z
@@ -32,6 +33,7 @@ const formSchema = z.object({
 
 export function PostForm() {
   const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -75,7 +77,7 @@ export function PostForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit" disabled={isSubmitting}>Submit</Button>
         <Button variant="outline" className="ml-2">
           <a className="back" href="#" onClick={() => router.replace("/posts")}>
             or Cancel
@@ -89,22 +91,25 @@ export function PostForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-        try {
-          const body = { title: values.title, content: values.content };
-          await fetch("/api/posts/create", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(body),
-          }).then((res) => {
-            if (res.status === 201) {
-              console.log("redirecting");
-              router.push("/posts");
-            }
-          });
-        } catch (error) {
-          console.error(error);
-        } finally {
-          console.log(values);
+    setIsSubmitting(true);
+
+    try {
+      const body = { title: values.title, content: values.content };
+      await fetch("/api/posts/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      }).then((res) => {
+        if (res.status === 201) {
+          console.log("redirecting");
+          router.push("/posts");
         }
-      }
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsSubmitting(false);
+      console.log(values);
+    }
+  }
 }
