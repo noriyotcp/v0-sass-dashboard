@@ -86,9 +86,25 @@ export function PostForm() {
   );
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+        try {
+          const body = { title: values.title, content: values.content };
+          await fetch("/api/posts/create", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+          }).then((res) => {
+            if (res.status === 201) {
+              console.log("redirecting");
+              router.push("/posts");
+            }
+          });
+        } catch (error) {
+          console.error(error);
+        } finally {
+          console.log(values);
+        }
+      }
 }
