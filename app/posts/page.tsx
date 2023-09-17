@@ -11,9 +11,9 @@ import { Button } from "@/components/ui/button";
 import { Post } from "@prisma/client";
 import { headers } from "next/headers"
 
-const fetchPosts = async () => {
+const fetchPosts = async (searchParams: string) => {
   const host = headers().get("host")
-  const res = await fetch(`http://${host}/api/posts`, {
+  const res = await fetch(`http://${host}/api/posts${searchParams}`, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -21,8 +21,15 @@ const fetchPosts = async () => {
   return res.json();
 }
 
-export default async function Posts() {
-  const posts: Post[] = await fetchPosts();
+export default async function Posts({
+  params,
+  searchParams,
+}: {
+  params: { slug: string };
+  searchParams: { [key: string]: string };
+}) {
+  const queryString = '?' + new URLSearchParams(searchParams).toString();
+  const posts: Post[] = await fetchPosts(queryString);
 
   return (
     <>
