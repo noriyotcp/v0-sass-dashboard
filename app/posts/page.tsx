@@ -9,18 +9,18 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Post } from "@prisma/client";
-import { headers } from "next/headers"
+import { headers } from "next/headers";
 import { isPublished } from "@/lib/utils";
 
 const fetchPosts = async (searchParams: string) => {
-  const host = headers().get("host")
+  const host = headers().get("host");
   const res = await fetch(`http://${host}/api/posts${searchParams}`, {
     headers: {
       "Content-Type": "application/json",
     },
   });
   return res.json();
-}
+};
 
 export default async function Posts({
   params,
@@ -29,7 +29,7 @@ export default async function Posts({
   params: { slug: string };
   searchParams: { [key: string]: string };
 }) {
-  const queryString = '?' + new URLSearchParams(searchParams).toString();
+  const queryString = "?" + new URLSearchParams(searchParams).toString();
   const posts: Post[] = await fetchPosts(queryString);
   const publishedValue = new URLSearchParams(searchParams).get("published");
   const isActive = isPublished(publishedValue);
@@ -51,6 +51,11 @@ export default async function Posts({
             className={`${isActive ? "" : "active"} [&.active]:underline`}
           >
             Drafts
+          </Link>
+        </Button>
+        <Button asChild variant="outline">
+          <Link href={`posts/create`} className={`float-right`}>
+            New
           </Link>
         </Button>
       </h2>

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState } from "react";
 import Router from "next/router";
@@ -20,7 +20,7 @@ const Draft: React.FC = () => {
         body: JSON.stringify(body),
       }).then((res) => {
         if (res.status === 201) {
-          console.log("redirecting")
+          console.log("redirecting");
           router.push("/posts");
         }
       });
@@ -49,7 +49,7 @@ const Draft: React.FC = () => {
             value={content}
           />
           <input disabled={!content || !title} type="submit" value="Create" />
-          <a className="back" href="#" onClick={() => Router.push("/")}>
+          <a className="back" href="#" onClick={() => router.replace("/posts")}>
             or Cancel
           </a>
         </form>
