@@ -1,14 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
 import { PostForm } from "./form";
 
-const Draft: React.FC = () => {
+export default function Draft() {
   return (
     <>
       <PostForm />
     </>
   );
-};
-
-export default Draft;
+}
