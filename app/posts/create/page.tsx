@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Router from "next/router";
 import { useRouter } from "next/navigation";
+import { PostForm } from "./form";
 
 const Draft: React.FC = () => {
   const [title, setTitle] = useState("");
@@ -31,6 +32,7 @@ const Draft: React.FC = () => {
 
   return (
     <>
+        <PostForm />
         <form onSubmit={submitData}>
           <h2 className="text-xl mb-5">New Draft</h2>
           <input
