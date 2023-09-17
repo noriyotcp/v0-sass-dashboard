@@ -98,7 +98,8 @@ export function PostForm() {
       }).then((res) => {
         if (res.status === 201) {
           console.log("redirecting");
-          router.push("/posts");
+          router.push("/posts?published=false");
+          router.refresh();
         }
       });
     } catch (error) {
