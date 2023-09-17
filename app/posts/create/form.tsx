@@ -15,7 +15,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { useState } from "react";
 
 const formSchema = z.object({
@@ -27,15 +26,13 @@ const formSchema = z.object({
     .refine((val) => val.trim().length > 0, {
       message: "Title must not be white spaces only.",
     }),
-  content: z
-    .string()
+  content: z.string(),
 });
 
 export function PostForm() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -77,7 +74,9 @@ export function PostForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={isSubmitting}>Submit</Button>
+        <Button type="submit" disabled={isSubmitting}>
+          Submit
+        </Button>
         <Button variant="outline" className="ml-2">
           <a className="back" href="#" onClick={() => router.replace("/posts")}>
             or Cancel
@@ -87,10 +86,7 @@ export function PostForm() {
     </Form>
   );
 
-  // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     setIsSubmitting(true);
 
     try {
