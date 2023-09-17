@@ -24,7 +24,7 @@ const formSchema = z.object({
     .refine((val) => val.trim().length > 0, {
       message: "Title must not be white spaces only.",
     }),
-  bio: z
+  content: z
     .string()
 });
 
@@ -34,7 +34,7 @@ export function PostForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
-      bio: "",
+      content: "",
     },
   });
 
@@ -56,13 +56,13 @@ export function PostForm() {
         />
         <FormField
           control={form.control}
-          name="bio"
+          name="content"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Bio</FormLabel>
+              <FormLabel>Content</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Tell us a little bit about yourself"
+                  placeholder="Content..."
                   className="resize-none"
                   {...field}
                 />
