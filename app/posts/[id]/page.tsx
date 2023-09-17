@@ -9,6 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { headers } from "next/headers";
 
 const fetchPost = async (id: string) => {
@@ -30,7 +31,17 @@ export default async function Post({ params }: { params: { id: string } }) {
 
   return (
     <>
-      <h2 className="text-xl mb-5">Welcome back, {post.title}!</h2>
+      <h2 className="text-xl mb-5">
+        <Badge
+          variant="outline"
+          className={`${
+            post.published ? "published" : ""
+          } [&.published]:bg-lime-600 [&.published]:text-white`}
+        >
+          {post.published ? "Published" : "Drafted"}
+        </Badge>
+      </h2>
+
       <Table>
         <TableHeader>
           <TableRow>
