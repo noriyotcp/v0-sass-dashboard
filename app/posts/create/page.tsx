@@ -31,9 +31,8 @@ const Draft: React.FC = () => {
 
   return (
     <>
-      <div>
         <form onSubmit={submitData}>
-          <h1>New Draft</h1>
+          <h2 className="text-xl mb-5">New Draft</h2>
           <input
             autoFocus
             onChange={(e) => setTitle(e.target.value)}
@@ -53,7 +52,6 @@ const Draft: React.FC = () => {
             or Cancel
           </a>
         </form>
-      </div>
       <style jsx>{`
         .page {
           background: var(--geist-background);
