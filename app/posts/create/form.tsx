@@ -12,6 +12,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
 
 const formSchema = z.object({
@@ -23,6 +24,8 @@ const formSchema = z.object({
     .refine((val) => val.trim().length > 0, {
       message: "Title must not be white spaces only.",
     }),
+  bio: z
+    .string()
 });
 
 export function PostForm() {
@@ -31,6 +34,7 @@ export function PostForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
+      bio: "",
     },
   });
 
@@ -45,6 +49,23 @@ export function PostForm() {
               <FormLabel>Title</FormLabel>
               <FormControl>
                 <Input placeholder="Title..." {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="bio"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Bio</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Tell us a little bit about yourself"
+                  className="resize-none"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
