@@ -21,6 +21,13 @@ const fetchPosts = async (searchParams: string) => {
   return res.json();
 }
 
+const isPublished = (published: string | null) => {
+  if (!published) {
+    return true;
+  }
+  return JSON.parse(published.toLocaleLowerCase());
+};
+
 export default async function Posts({
   params,
   searchParams,
@@ -30,11 +37,29 @@ export default async function Posts({
 }) {
   const queryString = '?' + new URLSearchParams(searchParams).toString();
   const posts: Post[] = await fetchPosts(queryString);
+  const publishedValue = new URLSearchParams(searchParams).get("published");
+  const isActive = isPublished(publishedValue);
 
   return (
     <>
-      <h2 className="text-xl mb-5">Posts</h2>
-      <p>Here is the overview of Published Posts:</p>
+      <h2 className="text-xl mb-5">
+        <Button asChild variant="link">
+          <Link
+            href={`posts?published=true`}
+            className={`${isActive ? "active" : ""} [&.active]:underline`}
+          >
+            Posts
+          </Link>
+        </Button>
+        <Button asChild variant="link">
+          <Link
+            href={`posts?published=false`}
+            className={`${isActive ? "" : "active"} [&.active]:underline`}
+          >
+            Drafts
+          </Link>
+        </Button>
+      </h2>
       <Table>
         <TableHeader>
           <TableRow>
