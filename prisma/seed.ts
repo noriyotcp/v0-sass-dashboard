@@ -61,10 +61,8 @@ async function main() {
   });
 
   posts.forEach(async (post) => {
-    await prisma.post.upsert({
-      where: { id: post.id },
-      update: {},
-      create: {
+    await prisma.post.create({
+      data: {
         title: post.title,
         content: post.content,
         published: post.published,
