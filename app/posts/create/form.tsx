@@ -48,7 +48,7 @@ export function PostForm() {
             <FormItem>
               <FormLabel>Title</FormLabel>
               <FormControl>
-                <Input placeholder="Title..." {...field} />
+                <Input placeholder="Title..." {...field} autoFocus />
               </FormControl>
               <FormMessage />
             </FormItem>
