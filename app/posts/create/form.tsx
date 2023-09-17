@@ -14,6 +14,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const formSchema = z.object({
   title: z
@@ -29,6 +31,8 @@ const formSchema = z.object({
 });
 
 export function PostForm() {
+  const router = useRouter();
+
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -72,6 +76,11 @@ export function PostForm() {
           )}
         />
         <Button type="submit">Submit</Button>
+        <Button variant="outline" className="ml-2">
+          <a className="back" href="#" onClick={() => router.replace("/posts")}>
+            or Cancel
+          </a>
+        </Button>
       </form>
     </Form>
   );
