@@ -48,8 +48,7 @@ export default async function Posts() {
                 <TableCell>{post.updatedAt.toString()}</TableCell>
 
                 <TableCell>
-                  <Link href={`#`}>
-                  {/* <Link href={`posts/${post.id}`}> */}
+                  <Link href={`posts/${post.id}`}>
                     <Button variant="link">Link</Button>
                   </Link>
                 </TableCell>
