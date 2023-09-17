@@ -65,6 +65,8 @@ export default async function Posts({
             <TableHead className="w-[100px]">ID</TableHead>
             <TableHead>Title</TableHead>
             <TableHead>Content</TableHead>
+            <TableHead>Created At</TableHead>
+            <TableHead>Updated At</TableHead>
             <TableHead></TableHead>
           </TableRow>
         </TableHeader>
