@@ -10,6 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Post } from "@prisma/client";
 import { headers } from "next/headers"
+import { isPublished } from "@/lib/utils";
 
 const fetchPosts = async (searchParams: string) => {
   const host = headers().get("host")
@@ -20,13 +21,6 @@ const fetchPosts = async (searchParams: string) => {
   });
   return res.json();
 }
-
-const isPublished = (published: string | null) => {
-  if (!published) {
-    return true;
-  }
-  return JSON.parse(published.toLocaleLowerCase());
-};
 
 export default async function Posts({
   params,

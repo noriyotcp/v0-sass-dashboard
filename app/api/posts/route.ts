@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { isPublished } from "@/lib/utils";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -15,11 +16,4 @@ export async function GET(request: Request) {
   });
 
   return NextResponse.json(posts, { status: 200 })
-}
-
-const isPublished = (published: string | null) => {
-  if (!published) {
-    return true;
-  }
-  return JSON.parse(published.toLocaleLowerCase());
 }
