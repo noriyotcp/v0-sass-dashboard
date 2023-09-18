@@ -13,6 +13,7 @@ export async function GET(request: Request) {
   }
   const posts = await prisma.post.findMany({
     where: { published },
+    orderBy: { updatedAt: "desc" },
   });
 
   return NextResponse.json(posts, { status: 200 })
