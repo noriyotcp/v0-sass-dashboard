@@ -1,11 +1,11 @@
 "use client";
 
-import { PostForm } from "./form";
+import { NewPostForm } from "../form";
 
 export default function Draft() {
   return (
     <>
-      <PostForm />
+      <NewPostForm />
     </>
   );
 }
