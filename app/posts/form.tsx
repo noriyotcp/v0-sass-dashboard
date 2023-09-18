@@ -70,7 +70,6 @@ export function NewPostForm() {
               <FormControl>
                 <Textarea
                   placeholder="Content..."
-                  className="resize-none"
                   {...field}
                 />
               </FormControl>
@@ -156,7 +155,6 @@ export function EditPostForm({ post }: { post: Post }) {
               <FormControl>
                 <Textarea
                   placeholder="Edit Content..."
-                  className="resize-none"
                   {...field}
                 />
               </FormControl>
