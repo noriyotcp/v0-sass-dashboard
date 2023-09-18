@@ -181,7 +181,7 @@ export function EditPostForm({ post }: { post: Post }) {
           Submit
         </Button>
         <Button variant="outline" className="ml-2">
-          <a className="back" href="#" onClick={() => router.replace("/posts")}>
+          <a className="back" href="#" onClick={() => router.replace(`/posts/${post.id}`)}>
             or Cancel
           </a>
         </Button>
