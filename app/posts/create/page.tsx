@@ -1,8 +1,6 @@
-"use client";
-
 import { NewPostForm } from "../form";
 
-export default function Draft() {
+export default function NewPost() {
   return (
     <>
       <NewPostForm />
