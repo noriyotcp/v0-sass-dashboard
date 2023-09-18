@@ -1,13 +1,5 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { headers } from "next/headers";
@@ -22,6 +14,11 @@ const fetchPost = async (id: string) => {
   return res;
 };
 
+const formatDateTime = (date: Date) => {
+  const d = new Date(date);
+  return d.toLocaleString();
+}
+
 export default async function Post({ params }: { params: { id: string } }) {
   const res = await fetchPost(params.id);
   if (res.status === 404) {
@@ -31,45 +28,41 @@ export default async function Post({ params }: { params: { id: string } }) {
 
   return (
     <>
-      <h2 className="text-xl mb-5">
-        <Badge
-          variant="outline"
-          className={`${
-            post.published ? "published" : ""
-          } [&.published]:bg-lime-600 [&.published]:text-white`}
-        >
-          {post.published ? "Published" : "Drafted"}
-        </Badge>
-        <Button asChild variant="outline">
-          <Link href={`/posts/${post.id}/edit`} className={`float-right`}>
-            Edit
-          </Link>
-        </Button>
-      </h2>
+      <section className="w-full">
+        <h2 className="text-xl mb-5">
+          <Badge
+            variant="outline"
+            className={`${
+              post.published ? "published" : ""
+            } [&.published]:bg-lime-600 [&.published]:text-white`}
+          >
+            {post.published ? "Published" : "Drafted"}
+          </Badge>
+          <Button asChild variant="outline">
+            <Link href={`/posts/${post.id}/edit`} className={`float-right`}>
+              Edit
+            </Link>
+          </Button>
+        </h2>
 
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[100px]">ID</TableHead>
-            <TableHead>Title</TableHead>
-            <TableHead>Content</TableHead>
-            <TableHead>Created At</TableHead>
-            <TableHead>Updated At</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          <TableRow key={post.id}>
-            <TableCell>{post.id}</TableCell>
-            <TableCell>{post.title}</TableCell>
-            <TableCell>{post.content}</TableCell>
-            <TableCell>{post.createdAt.toString()}</TableCell>
-            <TableCell>{post.updatedAt.toString()}</TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-      <Button variant="link">
-        <Link href="/posts">Back to Posts</Link>
-      </Button>
+        <div className="container">
+          <div className="space-y-6">
+            <h1 className="text-4xl font-bold tracking-tighter">
+              {post.title}
+            </h1>
+            <div className="flex text-zinc-500 space-x-1">
+              Created : {formatDateTime(post.createdAt)} / Updated : {formatDateTime(post.updatedAt)}
+            </div>
+            <p className="text-2xl dark:text-zinc-400">{post.content}</p>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400">
+              Post ID: {post.id}
+            </p>
+            <Button variant="link" className="pl-0">
+              <Link href="/posts">Back to Posts</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
     </>
   );
 }
