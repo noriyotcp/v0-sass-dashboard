@@ -54,7 +54,7 @@ export default async function Posts({
           </Link>
         </Button>
         <Button asChild variant="outline">
-          <Link href={`posts/create`} className={`float-right`}>
+          <Link href={`/posts/create`} className={`float-right`}>
             New
           </Link>
         </Button>
