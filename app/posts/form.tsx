@@ -17,6 +17,8 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { startTransition, useState } from "react";
 import { Post } from "@prisma/client";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 const formSchema = z.object({
   title: z
@@ -28,6 +30,7 @@ const formSchema = z.object({
       message: "Title must not be white spaces only.",
     }),
   content: z.string(),
+  published: z.boolean(),
 });
 
 export function NewPostForm() {
@@ -115,15 +118,16 @@ export function NewPostForm() {
 }
 
 export function EditPostForm({ post }: { post: Post }) {
-  console.log(post);
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [willPublished, setWillPublished] = useState(post.published);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: post.title,
       content: post.content ?? "",
+      published: willPublished,
     },
   });
 
@@ -160,6 +164,21 @@ export function EditPostForm({ post }: { post: Post }) {
             </FormItem>
           )}
         />
+        <FormField
+          control={form.control}
+          name="published"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <div className="flex items-center space-x-2">
+                  <Switch checked={willPublished} onClick={onClickPublished} />
+                  <FormLabel>Publish</FormLabel>
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <Button type="submit" disabled={isSubmitting}>
           Submit
         </Button>
@@ -172,19 +191,25 @@ export function EditPostForm({ post }: { post: Post }) {
     </Form>
   );
 
+  function onClickPublished() {
+    setWillPublished(!willPublished);
+  }
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
 
     try {
-      const body = { title: values.title, content: values.content };
+      const body = { title: values.title, content: values.content, published: willPublished };
       await fetch(`/api/posts/${post.id}/update`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
-      }).then((res) => {
+      }).then(async (res) => {
         if (res.status === 200) {
+          const data = await res.json();
+          console.log(`response data`, data);
           console.log("redirecting");
-          router.push(`/posts?published=${post.published}`);
+          router.push(`/posts?published=${data.published}`);
           router.refresh();
         }
       });
@@ -194,7 +219,6 @@ export function EditPostForm({ post }: { post: Post }) {
       startTransition(() => {
         setIsSubmitting(false);
       });
-      console.log(values);
     }
   }
 }
