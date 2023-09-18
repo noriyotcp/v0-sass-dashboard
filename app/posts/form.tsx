@@ -100,15 +100,15 @@ export function NewPostForm() {
         if (res.status === 201) {
           console.log("redirecting");
           router.push("/posts?published=false");
-          startTransition(() => {
-            router.refresh();
-          });
+          router.refresh();
         }
       });
     } catch (error) {
       console.error(error);
     } finally {
-      setIsSubmitting(false);
+      startTransition(() => {
+        setIsSubmitting(false);
+      });
       console.log(values);
     }
   }
@@ -184,16 +184,16 @@ export function EditPostForm({ post }: { post: Post }) {
       }).then((res) => {
         if (res.status === 200) {
           console.log("redirecting");
-          router.push("/posts?published=false");
-          startTransition(() => {
-            router.refresh();
-          });
+          router.push(`/posts?published=${post.published}`);
+          router.refresh();
         }
       });
     } catch (error) {
       console.error(error);
     } finally {
-      setIsSubmitting(false);
+      startTransition(() => {
+        setIsSubmitting(false);
+      });
       console.log(values);
     }
   }
