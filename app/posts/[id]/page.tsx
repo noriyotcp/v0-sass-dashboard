@@ -58,7 +58,13 @@ export default async function Post({ params }: { params: { id: string } }) {
               Post ID: {post.id}
             </p>
             <Button variant="link" className="pl-0">
-              <Link href="/posts">Back to Posts</Link>
+              {
+                post.published ? (
+                  <Link href={`/posts`}>Back to Posts</Link>
+                ) : (
+                  <Link href={`/posts?published=false`}>Back to Drafts</Link>
+                )
+              }
             </Button>
           </div>
         </div>
