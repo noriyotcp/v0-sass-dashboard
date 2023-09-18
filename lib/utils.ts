@@ -11,3 +11,8 @@ export const isPublished = (published: string | null) => {
   }
   return JSON.parse(published.toLocaleLowerCase());
 };
+
+export const formatDateTime = (date: Date) => {
+  const d = new Date(date);
+  return d.toLocaleString();
+};

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { headers } from "next/headers";
+import { formatDateTime } from "@/lib/utils";
 
 const fetchPost = async (id: string) => {
   const host = headers().get("host");
@@ -13,11 +14,6 @@ const fetchPost = async (id: string) => {
   });
   return res;
 };
-
-const formatDateTime = (date: Date) => {
-  const d = new Date(date);
-  return d.toLocaleString();
-}
 
 export default async function Post({ params }: { params: { id: string } }) {
   const res = await fetchPost(params.id);

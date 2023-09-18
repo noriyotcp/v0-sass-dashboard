@@ -10,7 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Post } from "@prisma/client";
 import { headers } from "next/headers";
-import { isPublished } from "@/lib/utils";
+import { isPublished, formatDateTime } from "@/lib/utils";
 
 const fetchPosts = async (searchParams: string) => {
   const host = headers().get("host");
@@ -77,8 +77,8 @@ export default async function Posts({
                 <TableCell>{post.id}</TableCell>
                 <TableCell>{post.title}</TableCell>
                 <TableCell>{post.content}</TableCell>
-                <TableCell>{post.createdAt.toString()}</TableCell>
-                <TableCell>{post.updatedAt.toString()}</TableCell>
+                <TableCell>{formatDateTime(post.createdAt)}</TableCell>
+                <TableCell>{formatDateTime(post.updatedAt)}</TableCell>
 
                 <TableCell>
                   <Link href={`posts/${post.id}`}>
