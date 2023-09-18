@@ -40,6 +40,11 @@ export default async function Post({ params }: { params: { id: string } }) {
         >
           {post.published ? "Published" : "Drafted"}
         </Badge>
+        <Button asChild variant="outline">
+          <Link href={`/posts/${post.id}/edit`} className={`float-right`}>
+            Edit
+          </Link>
+        </Button>
       </h2>
 
       <Table>

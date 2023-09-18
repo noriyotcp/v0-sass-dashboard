@@ -16,6 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { startTransition, useState } from "react";
+import { Post } from "@prisma/client";
 
 const formSchema = z.object({
   title: z
@@ -113,15 +114,16 @@ export function NewPostForm() {
   }
 }
 
-export function EditPostForm() {
+export function EditPostForm({ post }: { post: Post }) {
+  console.log(post);
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      content: "",
+      title: post.title,
+      content: post.content ?? "",
     },
   });
 
@@ -135,7 +137,7 @@ export function EditPostForm() {
             <FormItem>
               <FormLabel>Title</FormLabel>
               <FormControl>
-                <Input placeholder="Title..." {...field} autoFocus />
+                <Input placeholder="Edit Title..." {...field} autoFocus />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -149,7 +151,7 @@ export function EditPostForm() {
               <FormLabel>Content</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Content..."
+                  placeholder="Edit Content..."
                   className="resize-none"
                   {...field}
                 />
@@ -175,12 +177,12 @@ export function EditPostForm() {
 
     try {
       const body = { title: values.title, content: values.content };
-      await fetch("/api/posts/create", {
-        method: "POST",
+      await fetch(`/api/posts/${post.id}/update`, {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       }).then((res) => {
-        if (res.status === 201) {
+        if (res.status === 200) {
           console.log("redirecting");
           router.push("/posts?published=false");
           startTransition(() => {
