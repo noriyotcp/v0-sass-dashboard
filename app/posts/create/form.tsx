@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { startTransition, useState } from "react";
 
 const formSchema = z.object({
   title: z
@@ -99,7 +99,9 @@ export function PostForm() {
         if (res.status === 201) {
           console.log("redirecting");
           router.push("/posts?published=false");
-          router.refresh();
+          startTransition(() => {
+            router.refresh();
+          });
         }
       });
     } catch (error) {
