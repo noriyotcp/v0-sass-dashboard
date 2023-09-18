@@ -18,7 +18,6 @@ import { useRouter } from "next/navigation";
 import { startTransition, useState } from "react";
 import { Post } from "@prisma/client";
 import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
 
 const formSchema = z.object({
   title: z
