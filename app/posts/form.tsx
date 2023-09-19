@@ -186,7 +186,7 @@ export function EditPostForm({ post }: { post: Post }) {
             <FormItem>
               <FormControl>
                 <div className="flex items-center space-x-2">
-                  <Switch checked={willPublished} onClick={onClickPublished} />
+                  <Switch checked={willPublished} onClick={(_e) => {setWillPublished(!willPublished)}} />
                   <FormLabel>Publish</FormLabel>
                 </div>
               </FormControl>
@@ -206,15 +206,13 @@ export function EditPostForm({ post }: { post: Post }) {
     </Form>
   );
 
-  function onClickPublished() {
-    setWillPublished(!willPublished);
-  }
-
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
 
     try {
       const body = { title: values.title, content: values.content, published: willPublished };
+      console.log(`body`, body);
+
       await fetch(`/api/posts/${post.id}/update`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
