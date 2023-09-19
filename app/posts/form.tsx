@@ -15,9 +15,10 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { startTransition, useState } from "react";
+import { startTransition, useRef, useState } from "react";
 import { Post } from "@prisma/client";
 import { Switch } from "@/components/ui/switch";
+import { isPublished } from "@/lib/utils";
 
 const formSchema = z.object({
   title: z
@@ -35,12 +36,13 @@ const formSchema = z.object({
 export function NewPostForm() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const buttonRef = useRef<HTMLButtonElement>(null)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
       content: "",
+      published: false,
     },
   });
 
@@ -67,10 +69,22 @@ export function NewPostForm() {
             <FormItem>
               <FormLabel>Content</FormLabel>
               <FormControl>
-                <Textarea
-                  placeholder="Content..."
-                  {...field}
-                />
+                <Textarea placeholder="Content..." {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="published"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <div className="flex items-center space-x-2">
+                  <Switch ref={buttonRef} />
+                  <FormLabel>Publish</FormLabel>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -92,15 +106,20 @@ export function NewPostForm() {
     setIsSubmitting(true);
 
     try {
-      const body = { title: values.title, content: values.content };
+      const published = isPublished(buttonRef.current!.ariaChecked);
+      const body = { title: values.title, content: values.content, published };
+      console.log(`body`, body);
+
       await fetch("/api/posts/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
-      }).then((res) => {
+      }).then(async (res) => {
         if (res.status === 201) {
+          const data = await res.json();
+          console.log(`response data`, data);
           console.log("redirecting");
-          router.push("/posts?published=false");
+          router.push(`/posts?published=${data.published}`);
           router.refresh();
         }
       });
@@ -110,7 +129,6 @@ export function NewPostForm() {
       startTransition(() => {
         setIsSubmitting(false);
       });
-      console.log(values);
     }
   }
 }
