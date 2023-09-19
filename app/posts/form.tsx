@@ -15,10 +15,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { startTransition, useRef, useState } from "react";
+import { startTransition, useState } from "react";
 import { Post } from "@prisma/client";
 import { Switch } from "@/components/ui/switch";
-import { isPublished } from "@/lib/utils";
 
 const formSchema = z.object({
   title: z
@@ -36,7 +35,8 @@ const formSchema = z.object({
 export function NewPostForm() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const buttonRef = useRef<HTMLButtonElement>(null)
+  const [willPublished, setWillPublished] = useState(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -82,7 +82,11 @@ export function NewPostForm() {
             <FormItem>
               <FormControl>
                 <div className="flex items-center space-x-2">
-                  <Switch ref={buttonRef} />
+                  <Switch
+                    onClick={(_e) => {
+                      setWillPublished(!willPublished);
+                    }}
+                  />
                   <FormLabel>Publish</FormLabel>
                 </div>
               </FormControl>
@@ -106,8 +110,7 @@ export function NewPostForm() {
     setIsSubmitting(true);
 
     try {
-      const published = isPublished(buttonRef.current!.ariaChecked);
-      const body = { title: values.title, content: values.content, published };
+      const body = { title: values.title, content: values.content, published: willPublished };
       console.log(`body`, body);
 
       await fetch("/api/posts/create", {
