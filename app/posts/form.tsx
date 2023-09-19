@@ -110,7 +110,11 @@ export function NewPostForm() {
     setIsSubmitting(true);
 
     try {
-      const body = { title: values.title, content: values.content, published: willPublished };
+      const body = {
+        title: values.title,
+        content: values.content,
+        published: willPublished,
+      };
       console.log(`body`, body);
 
       await fetch("/api/posts/create", {
@@ -173,10 +177,7 @@ export function EditPostForm({ post }: { post: Post }) {
             <FormItem>
               <FormLabel>Content</FormLabel>
               <FormControl>
-                <Textarea
-                  placeholder="Edit Content..."
-                  {...field}
-                />
+                <Textarea placeholder="Edit Content..." {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -189,7 +190,12 @@ export function EditPostForm({ post }: { post: Post }) {
             <FormItem>
               <FormControl>
                 <div className="flex items-center space-x-2">
-                  <Switch checked={willPublished} onClick={(_e) => {setWillPublished(!willPublished)}} />
+                  <Switch
+                    checked={willPublished}
+                    onClick={(_e) => {
+                      setWillPublished(!willPublished);
+                    }}
+                  />
                   <FormLabel>Publish</FormLabel>
                 </div>
               </FormControl>
@@ -201,7 +207,11 @@ export function EditPostForm({ post }: { post: Post }) {
           Submit
         </Button>
         <Button variant="outline" className="ml-2">
-          <a className="back" href="#" onClick={() => router.replace(`/posts/${post.id}`)}>
+          <a
+            className="back"
+            href="#"
+            onClick={() => router.replace(`/posts/${post.id}`)}
+          >
             or Cancel
           </a>
         </Button>
@@ -213,7 +223,11 @@ export function EditPostForm({ post }: { post: Post }) {
     setIsSubmitting(true);
 
     try {
-      const body = { title: values.title, content: values.content, published: willPublished };
+      const body = {
+        title: values.title,
+        content: values.content,
+        published: willPublished,
+      };
       console.log(`body`, body);
 
       await fetch(`/api/posts/${post.id}/update`, {
