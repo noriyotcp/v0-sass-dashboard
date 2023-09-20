@@ -18,8 +18,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body suppressHydrationWarning={true} className={inter.className}>
-        <div className="h-screen w-full flex flex-col lg:flex-row">
-          <nav className="w-full lg:w-64 bg-gray-800 text-white p-5">
+        <div className="h-full w-full flex flex-col lg:flex-row">
+          <nav className="sticky top-0 lg:h-screen lg:w-64 bg-gray-800 text-white p-5">
             <h1 className="text-2xl mb-5">Dashboard</h1>
             <ul className="space-y-2">
               <li>
