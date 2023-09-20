@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { headers } from "next/headers";
 import { formatDateTime } from "@/lib/utils";
+import PostContent from "./PostContent";
 
 const fetchPost = async (id: string) => {
   const host = headers().get("host");
@@ -47,20 +48,19 @@ export default async function Post({ params }: { params: { id: string } }) {
               {post.title}
             </h1>
             <div className="flex text-zinc-500 space-x-1">
-              Created : {formatDateTime(post.createdAt)} / Updated : {formatDateTime(post.updatedAt)}
+              Created : {formatDateTime(post.createdAt)} / Updated :{" "}
+              {formatDateTime(post.updatedAt)}
             </div>
-            <p className="text-2xl dark:text-zinc-400">{post.content}</p>
+            <PostContent post={post} />
             <p className="text-xs text-zinc-500 dark:text-zinc-400">
               Post ID: {post.id}
             </p>
             <Button variant="link" className="pl-0">
-              {
-                post.published ? (
-                  <Link href={`/posts`}>Back to Posts</Link>
-                ) : (
-                  <Link href={`/posts?published=false`}>Back to Drafts</Link>
-                )
-              }
+              {post.published ? (
+                <Link href={`/posts`}>Back to Posts</Link>
+              ) : (
+                <Link href={`/posts?published=false`}>Back to Drafts</Link>
+              )}
             </Button>
           </div>
         </div>
