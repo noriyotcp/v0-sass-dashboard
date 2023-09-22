@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Post } from "@prisma/client";
 import { headers } from "next/headers";
 import { isPublished, formatDateTime, truncateString } from "@/lib/utils";
-import DeleteButton from "./DeleteButton";
+import DeletePostDialog from "./DeletePostDialog";
 
 const fetchPosts = async (searchParams: string) => {
   const host = headers().get("host");
@@ -88,9 +88,8 @@ export default async function Posts({
                   </Link>
                 </TableCell>
                 <TableCell>
-                  <DeleteButton
+                  <DeletePostDialog
                     post={post}
-                    redirectUrl={`/posts?published=${post.published}`}
                   />
                 </TableCell>
               </TableRow>
