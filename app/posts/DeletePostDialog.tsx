@@ -23,11 +23,14 @@ async function deletePost(
 ): Promise<void> {
   await fetch(`/api/posts/${id}/delete`, {
     method: "DELETE",
-  });
-  if (redirectURL) {
-    router.push(redirectURL);
-  }
-  window.location.reload(); // Close the dialog
+  })
+    .then(() => {
+      if (redirectURL) {
+        router.push(redirectURL);
+      }
+      window.location.reload(); // Close the dialog
+    })
+    .catch((error) => console.error(error));
 }
 
 export default function DeletePostDialog({ post, redirectUrl, okText }: { post: Post; redirectUrl?: string; okText?: string}) {
