@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
+import dayjs from "dayjs";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -13,8 +14,7 @@ export const isPublished = (published: string | null) => {
 };
 
 export const formatDateTime = (date: Date) => {
-  const d = new Date(date);
-  return d.toLocaleString();
+  return dayjs(date).format("YYYY/MM/DD h:mm");
 };
 
 export const truncateString = (str: string, num: number) => {
