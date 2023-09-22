@@ -21,7 +21,7 @@ async function deletePost(
   id: number,
   router: AppRouterInstance,
   setIsSubmitting: (isSubmitting: boolean) => void,
-  redirectURL?: string,
+  redirectURL?: string
 ): Promise<void> {
   setIsSubmitting(true);
 
@@ -42,7 +42,15 @@ async function deletePost(
     });
 }
 
-export default function DeletePostDialog({ post, redirectUrl, okText }: { post: Post; redirectUrl?: string; okText?: string}) {
+export default function DeletePostDialog({
+  post,
+  redirectUrl,
+  okText,
+}: {
+  post: Post;
+  redirectUrl?: string;
+  okText?: string;
+}) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
