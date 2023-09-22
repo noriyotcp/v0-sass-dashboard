@@ -48,7 +48,9 @@ export default function DeletePostDialog({ post, redirectUrl, okText }: { post: 
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger>DELETE</AlertDialogTrigger>
+      <AlertDialogTrigger className="hover:text-red-600">
+        DELETE
+      </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
@@ -62,7 +64,9 @@ export default function DeletePostDialog({ post, redirectUrl, okText }: { post: 
           <AlertDialogAction disabled={isSubmitting}>
             <Link
               href="#"
-              onClick={(_e) => deletePost(post.id, router, setIsSubmitting, redirectUrl)}
+              onClick={(_e) =>
+                deletePost(post.id, router, setIsSubmitting, redirectUrl)
+              }
             >
               {okText ?? "OK"}
             </Link>
