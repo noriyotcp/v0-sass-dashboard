@@ -30,7 +30,7 @@ async function deletePost(
   window.location.reload(); // Close the dialog
 }
 
-export default function DeletePostDialog(props: { post: Post; redirectUrl?: string }) {
+export default function DeletePostDialog({ post, redirectUrl, okText }: { post: Post; redirectUrl?: string; okText?: string}) {
   const router = useRouter();
 
   return (
@@ -50,10 +50,10 @@ export default function DeletePostDialog(props: { post: Post; redirectUrl?: stri
             <Link
               href="#"
               onClick={(_e) =>
-                deletePost(props.post.id, router, props.redirectUrl)
+                deletePost(post.id, router, redirectUrl)
               }
             >
-              {"OK"}
+              {okText ?? "OK"}
             </Link>
           </AlertDialogAction>
         </AlertDialogFooter>

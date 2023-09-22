@@ -90,6 +90,7 @@ export default async function Posts({
                 <TableCell>
                   <DeletePostDialog
                     post={post}
+                    okText="Delete"
                   />
                 </TableCell>
               </TableRow>
