@@ -126,7 +126,7 @@ export function NewPostForm() {
           const data = await res.json();
           console.log(`response data`, data);
           console.log("redirecting");
-          router.push(`/posts?published=${data.published}`);
+          router.push(`/posts/${data.id}`);
           router.refresh();
         }
       });
@@ -239,7 +239,7 @@ export function EditPostForm({ post }: { post: Post }) {
           const data = await res.json();
           console.log(`response data`, data);
           console.log("redirecting");
-          router.push(`/posts?published=${data.published}`);
+          router.push(`/posts/${data.id}`);
           router.refresh();
         }
       });
