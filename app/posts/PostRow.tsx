@@ -14,16 +14,16 @@ export default function PostRow({ post }: {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   return (
-    <TableRow key={post.id}>
+    <TableRow key={post.id} className={isSubmitting ? "on-delete" : ""}>
       <TableCell>{post.id}</TableCell>
       <TableCell>{post.title}</TableCell>
       <TableCell>{truncateString(post.content!, 32)}</TableCell>
       <TableCell>{formatDateTime(post.createdAt)}</TableCell>
       <TableCell>{formatDateTime(post.updatedAt)}</TableCell>
       <TableCell>
-        <Link href={`posts/${post.id}`}>
-          <Button variant="link">Link</Button>
-        </Link>
+        <Button variant="link" disabled={isSubmitting}>
+          <Link href={`posts/${post.id}`}>Link</Link>
+        </Button>
       </TableCell>
       <TableCell>
         <DeletePostDialog

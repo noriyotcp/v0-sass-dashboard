@@ -172,4 +172,8 @@
   .markdown .highlight pre {
     @apply bg-gray-100 !important;
   }
+
+  .on-delete {
+    @apply bg-amber-100 animate-pulse;
+  }
 }

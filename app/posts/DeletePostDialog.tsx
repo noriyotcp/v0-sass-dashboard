@@ -58,7 +58,7 @@ export default function DeletePostDialog({
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger className="hover:text-red-600">
+      <AlertDialogTrigger className="hover:text-red-600" disabled={isSubmitting}>
         DELETE
       </AlertDialogTrigger>
       <AlertDialogContent>
