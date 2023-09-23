@@ -2,7 +2,6 @@ import Link from "next/link";
 import {
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
@@ -10,8 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Post } from "@prisma/client";
 import { headers } from "next/headers";
-import { isPublished, formatDateTime, truncateString } from "@/lib/utils";
-import DeletePostDialog from "./DeletePostDialog";
+import { isPublished } from "@/lib/utils";
 import PostRow from "./PostRow";
 
 const fetchPosts = async (searchParams: string) => {
