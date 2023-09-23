@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Post } from "@prisma/client";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { startTransition, useState } from "react";
 
@@ -32,7 +31,7 @@ async function deletePost(
       if (redirectURL) {
         router.push(redirectURL);
       }
-      window.location.reload(); // Close the dialog
+      router.refresh();
     })
     .catch((error) => console.error(error))
     .finally(() => {
@@ -69,15 +68,14 @@ export default function DeletePostDialog({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel disabled={isSubmitting}>Cancel</AlertDialogCancel>
-          <AlertDialogAction disabled={isSubmitting}>
-            <Link
-              href="#"
-              onClick={(_e) =>
-                deletePost(post.id, router, setIsSubmitting, redirectUrl)
-              }
-            >
-              {okText ?? "OK"}
-            </Link>
+          <AlertDialogAction
+            disabled={isSubmitting}
+            className="bg-red-500"
+            onClick={(_e) =>
+              deletePost(post.id, router, setIsSubmitting, redirectUrl)
+            }
+          >
+            {okText ?? "OK"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
