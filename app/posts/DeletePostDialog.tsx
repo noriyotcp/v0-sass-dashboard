@@ -14,7 +14,7 @@ import {
 import { Post } from "@prisma/client";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 import { useRouter } from "next/navigation";
-import { startTransition, useState } from "react";
+import { startTransition } from "react";
 
 async function deletePost(
   id: number,
@@ -43,15 +43,18 @@ async function deletePost(
 
 export default function DeletePostDialog({
   post,
+  isSubmitting,
+  setIsSubmitting,
   redirectUrl,
   okText,
 }: {
   post: Post;
+  isSubmitting: boolean;
+  setIsSubmitting: (isSubmitting: boolean) => void;
   redirectUrl?: string;
   okText?: string;
 }) {
   const router = useRouter();
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   return (
     <AlertDialog>

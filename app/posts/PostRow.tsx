@@ -28,6 +28,8 @@ export default function PostRow({ post }: {
       <TableCell>
         <DeletePostDialog
           post={post}
+          isSubmitting={isSubmitting}
+          setIsSubmitting={setIsSubmitting}
           okText={"DELETE"}
         />
       </TableCell>
