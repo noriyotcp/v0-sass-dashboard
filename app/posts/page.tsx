@@ -12,6 +12,7 @@ import { Post } from "@prisma/client";
 import { headers } from "next/headers";
 import { isPublished, formatDateTime, truncateString } from "@/lib/utils";
 import DeletePostDialog from "./DeletePostDialog";
+import PostRow from "./PostRow";
 
 const fetchPosts = async (searchParams: string) => {
   const host = headers().get("host");
@@ -75,25 +76,12 @@ export default async function Posts({
         <TableBody>
           {posts.map((post) => {
             return (
-              <TableRow key={post.id}>
-                <TableCell>{post.id}</TableCell>
-                <TableCell>{post.title}</TableCell>
-                <TableCell>{truncateString(post.content!, 32)}</TableCell>
-                <TableCell>{formatDateTime(post.createdAt)}</TableCell>
-                <TableCell>{formatDateTime(post.updatedAt)}</TableCell>
-
-                <TableCell>
-                  <Link href={`posts/${post.id}`}>
-                    <Button variant="link">Link</Button>
-                  </Link>
-                </TableCell>
-                <TableCell>
-                  <DeletePostDialog
-                    post={post}
-                    okText="Delete"
-                  />
-                </TableCell>
-              </TableRow>
+              <>
+                <PostRow
+                  key={post.id}
+                  post={post}
+                />
+              </>
             );
           })}
         </TableBody>
