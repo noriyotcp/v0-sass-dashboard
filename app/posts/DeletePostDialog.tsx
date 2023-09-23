@@ -19,10 +19,10 @@ import { startTransition } from "react";
 async function deletePost(
   id: number,
   router: AppRouterInstance,
-  setIsSubmitting: (isSubmitting: boolean) => void,
+  setIsDeleting: (isDeleting: boolean) => void,
   redirectURL?: string
 ): Promise<void> {
-  setIsSubmitting(true);
+  setIsDeleting(true);
 
   await fetch(`/api/posts/${id}/delete`, {
     method: "DELETE",
@@ -36,21 +36,21 @@ async function deletePost(
     .catch((error) => console.error(error))
     .finally(() => {
       startTransition(() => {
-        setIsSubmitting(false);
+        setIsDeleting(false);
       });
     });
 }
 
 export default function DeletePostDialog({
   post,
-  isSubmitting,
-  setIsSubmitting,
+  isDeleting: isDeleting,
+  setIsDeleting: setIsDeleting,
   redirectUrl,
   okText,
 }: {
   post: Post;
-  isSubmitting: boolean;
-  setIsSubmitting: (isSubmitting: boolean) => void;
+  isDeleting: boolean;
+  setIsDeleting: (isDeleting: boolean) => void;
   redirectUrl?: string;
   okText?: string;
 }) {
@@ -58,7 +58,7 @@ export default function DeletePostDialog({
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger className="hover:text-red-600" disabled={isSubmitting}>
+      <AlertDialogTrigger className="hover:text-red-600" disabled={isDeleting}>
         DELETE
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -70,12 +70,12 @@ export default function DeletePostDialog({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={isSubmitting}>Cancel</AlertDialogCancel>
+          <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
           <AlertDialogAction
-            disabled={isSubmitting}
+            disabled={isDeleting}
             className="bg-red-500"
             onClick={(_e) =>
-              deletePost(post.id, router, setIsSubmitting, redirectUrl)
+              deletePost(post.id, router, setIsDeleting, redirectUrl)
             }
           >
             {okText ?? "OK"}
