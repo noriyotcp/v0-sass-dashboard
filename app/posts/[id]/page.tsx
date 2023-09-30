@@ -1,14 +1,12 @@
-import { notFound } from "next/navigation";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { headers } from "next/headers";
-import { formatDateTime } from "@/lib/utils";
-import PostContent from "./PostContent";
+import { notFound } from "next/navigation";
+
+import Post from "./Post";
 
 const fetchPost = async (id: string) => {
   const host = headers().get("host");
-  const res = await fetch(`http://${host}/api/posts/${id}`, {
+  const protocal = process?.env.NODE_ENV === "development" ? "http" : "https";
+  const res = await fetch(`${protocal}://${host}/api/posts/${id}`, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -16,55 +14,16 @@ const fetchPost = async (id: string) => {
   return res;
 };
 
-export default async function Post({ params }: { params: { id: string } }) {
+export default async function PostContainer({
+  params,
+}: {
+  params: { id: string };
+}) {
   const res = await fetchPost(params.id);
   if (res.status === 404) {
     return notFound();
   }
   const post = await res.json();
 
-  return (
-    <>
-      <section className="w-full">
-        <h2 className="text-xl mb-5">
-          <Badge
-            variant="outline"
-            className={`${
-              post.published ? "published" : ""
-            } [&.published]:bg-lime-600 [&.published]:text-white`}
-          >
-            {post.published ? "Published" : "Drafted"}
-          </Badge>
-          <Button asChild variant="outline">
-            <Link href={`/posts/${post.id}/edit`} className={`float-right`}>
-              Edit
-            </Link>
-          </Button>
-        </h2>
-
-        <div className="container">
-          <div className="space-y-6">
-            <h1 className="text-4xl font-bold tracking-tighter">
-              {post.title}
-            </h1>
-            <div className="flex text-zinc-500 space-x-1">
-              Created : {formatDateTime(post.createdAt)} / Updated :{" "}
-              {formatDateTime(post.updatedAt)}
-            </div>
-            <PostContent post={post} />
-            <p className="text-xs text-zinc-500 dark:text-zinc-400">
-              Post ID: {post.id}
-            </p>
-            <Button variant="link" className="pl-0">
-              {post.published ? (
-                <Link href={`/posts`}>Back to Posts</Link>
-              ) : (
-                <Link href={`/posts?published=false`}>Back to Drafts</Link>
-              )}
-            </Button>
-          </div>
-        </div>
-      </section>
-    </>
-  );
+  return <Post post={post} />;
 }
