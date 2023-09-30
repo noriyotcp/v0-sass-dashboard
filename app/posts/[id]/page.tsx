@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { headers } from "next/headers";
 import { formatDateTime } from "@/lib/utils";
 import PostContent from "./PostContent";
+import DeleteButton from "./DeleteButton";
 
 const fetchPost = async (id: string) => {
   const host = headers().get("host");
@@ -35,6 +36,7 @@ export default async function Post({ params }: { params: { id: string } }) {
           >
             {post.published ? "Published" : "Drafted"}
           </Badge>
+          <DeleteButton post={post} />
           <Button asChild variant="outline">
             <Link href={`/posts/${post.id}/edit`} className={`float-right`}>
               Edit
