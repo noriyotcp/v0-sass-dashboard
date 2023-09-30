@@ -1,15 +1,20 @@
 export default function FullscreenModal({
   title,
   description,
-  nocontent=false,
+  children,
 }: {
   title?: string;
   description?: string;
-  nocontent?: boolean;
+  children?: React.ReactNode;
 }) {
   return (
-    <dialog className="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50" open>
-      {nocontent ? null : (
+    <dialog
+      className="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-neutral-200 bg-opacity-50"
+      open
+    >
+      {children ? (
+        children
+      ) : (
         <div className="relative flex flex-col items-center w-full max-w-md p-6 mx-auto space-y-4 bg-white rounded-lg shadow-lg">
           <div className="flex flex-col items-center space-y-4">
             <h2 className="text-xl font-bold">{title}</h2>
