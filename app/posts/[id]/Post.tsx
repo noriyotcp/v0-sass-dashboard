@@ -21,7 +21,10 @@ export default function Post({
   return (
     <>
       {isDeleting ? (
-        <FullscreenModal />
+        <FullscreenModal
+          title="Deleting Post"
+          description="Please wait a moment."
+        />
       ) : (
         <section className="w-full">
           <h2 className="text-xl mb-5">
