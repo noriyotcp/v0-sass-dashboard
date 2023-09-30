@@ -9,7 +9,6 @@ import FullscreenLoading from "@/components/FullscreenLoading";
 import { Post } from "@prisma/client";
 
 import PostContent from "./PostContent";
-import DeleteButton from "./DeleteButton";
 import DeletePostDialog from "../DeletePostDialog";
 
 export default function Post({
