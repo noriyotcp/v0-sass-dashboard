@@ -10,6 +10,7 @@ import { Post } from "@prisma/client";
 
 import PostContent from "./PostContent";
 import DeleteButton from "./DeleteButton";
+import DeletePostDialog from "../DeletePostDialog";
 
 export default function Post({
   post,
@@ -33,11 +34,6 @@ export default function Post({
             >
               {post.published ? "Published" : "Drafted"}
             </Badge>
-            <DeleteButton
-              post={post}
-              isDeleting={isDeleting}
-              setIsDeleting={setIsDeleting}
-            />
             <Button asChild variant="outline">
               <Link href={`/posts/${post.id}/edit`} className={`float-right`}>
                 Edit
@@ -58,13 +54,22 @@ export default function Post({
               <p className="text-xs text-zinc-500 dark:text-zinc-400">
                 Post ID: {post.id}
               </p>
-              <Button variant="link" className="pl-0">
-                {post.published ? (
-                  <Link href={`/posts`}>Back to Posts</Link>
-                ) : (
-                  <Link href={`/posts?published=false`}>Back to Drafts</Link>
-                )}
-              </Button>
+              <div className="flex justify-between">
+                <Button variant="link" className="pl-0">
+                  {post.published ? (
+                    <Link href={`/posts`}>Back to Posts</Link>
+                  ) : (
+                    <Link href={`/posts?published=false`}>Back to Drafts</Link>
+                  )}
+                </Button>
+                <DeletePostDialog
+                  post={post}
+                  isDeleting={isDeleting}
+                  setIsDeleting={setIsDeleting}
+                  redirectUrl={`/posts?published=${post.published}`}
+                  okText="Delete"
+                />
+              </div>
             </div>
           </div>
         </section>
