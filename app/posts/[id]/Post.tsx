@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { formatDateTime } from "@/lib/utils";
-import FullscreenLoading from "@/components/FullscreenLoading";
+import FullscreenModal from "@/components/FullscreenModal";
 import { Post } from "@prisma/client";
 
 import PostContent from "./PostContent";
@@ -21,7 +21,7 @@ export default function Post({
   return (
     <>
       {isDeleting ? (
-        <FullscreenLoading />
+        <FullscreenModal />
       ) : (
         <section className="w-full">
           <h2 className="text-xl mb-5">

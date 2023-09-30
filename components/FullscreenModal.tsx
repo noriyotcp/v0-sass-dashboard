@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-export default function FullscreenLoading() {
+export default function FullscreenModal() {
   const ref = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
